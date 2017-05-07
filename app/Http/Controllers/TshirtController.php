@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Contracts\Queue\EntityNotFoundException;
+use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+class TshirtController extends Controller
+{
+    //
+
+	protected function admin($userCode){
+
+		try {
+			$user = User::where('user_code', strtolower($userCode))->firstOrFail();
+			$pendingUsers = $user->status =='moderator' ? User::all()->where('status','unapproved') : [];
+		} catch (ModelNotFoundException $e){
+			return redirect('/register');
+		}
+
+		return view('home', ['user' => $user,'pendingUsers' => $pendingUsers]);
+
+	}
+
+	protected function index(){
+		$leaderboard = User::all()->whereIn('status',['active','moderator'])->sortBy('tshirt_count', SORT_DESC, true);
+
+		$counts = DB::table('users')->select('sum(tshirt_count) as total')->whereIn('status',['active','moderator']);
+		return view('welcome',['leaderboard' => $leaderboard, 'counts' => $counts]);
+	}
+
+	protected function register(Request $request) {
+	    $data = $request->all();
+
+		if(! isset($data['name'])){
+			return view('/auth/register');
+		}else {
+			$user = User::create([
+				'name' => $data['name'],
+				'status' => 'unapproved',
+				'user_code' => $this->generateUserCode()
+			]);
+
+			redirect('/tshirt/' . $user->user_code);
+		}
+	}
+
+	protected function addShirt($userCode) {
+		try {
+			$user = User::where('user_code', strtolower($userCode))->firstOrFail();
+		} catch (ModelNotFoundException $e){
+			return redirect('/register');
+		}
+
+		$user->tshirt_count += 1;
+		$user->save();
+
+		return redirect('/tshirt/' . $user->user_code);
+	}
+
+	protected function approveUser($adminCode, $userCode){
+
+		try {
+			$adminUser = User::where('user_code', strtolower($adminCode))->firstOrFail();
+			if($adminUser->status =='moderator'){
+				$user = User::where('user_code', strtolower($userCode))->firstOrFail();
+				$user->status = 'active';
+				$user->save();
+			}
+		} catch (ModelNotFoundException $e){
+			return redirect('/');
+		}
+	}
+
+	private function generateUserCode(){
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+		$randstring = '';
+		for ($i = 0; $i < 4; $i++) {
+			$randstring .= $characters[rand(0, strlen($characters))];
+		}
+		return $randstring;
+
+	}
+}
