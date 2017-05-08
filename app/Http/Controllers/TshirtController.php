@@ -89,6 +89,7 @@ class TshirtController extends Controller
 				$user = User::where('user_code', strtolower($userCode))->firstOrFail();
 				$user->status = 'active';
 				$user->save();
+				return redirect('/tshirt/' . $user->user_code);
 			}
 		} catch (ModelNotFoundException $e){
 			return redirect('/');
