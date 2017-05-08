@@ -38,4 +38,10 @@ class User extends Authenticatable
 		$this->tshirtCount = $newCount;
 		$this->save();
 	}
+
+    public function getTshirtEmojiAttribute() {
+        return $this->tshirt_count > 0
+            ? str_repeat('👕', $this->tshirt_count)
+            : '🙈';
+    }
 }
