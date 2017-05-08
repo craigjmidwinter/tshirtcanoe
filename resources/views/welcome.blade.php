@@ -75,7 +75,7 @@
                 vertical-align: bottom;
                 height: 100%;
                 display: inline;
-                font-size: 2em;
+                font-size: x-large;
             }
             .avatar-container{
                 text-align: center;
@@ -116,7 +116,7 @@
                         @php
                             $place = $user->tshirt_count === $lastShirts ? $place : $loop->index + 1;
                         @endphp
-                        <div class="col-xs-8 leaderboard-item-container">
+                        <div class="col-xs-12 col-md-8 leaderboard-item-container">
                             <div class="row leaderboard-item">
                                 <div class="col-xs-3">
                                     <div class="placement">
