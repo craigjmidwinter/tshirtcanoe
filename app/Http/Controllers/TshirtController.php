@@ -81,7 +81,7 @@ class TshirtController extends Controller
 		return redirect('/tshirt/' . $user->user_code);
 	}
 
-	protected function approveUser($adminCode, $userCode){
+	protected function approve($adminCode, $userCode){
 
 		try {
 			$adminUser = User::where('user_code', strtolower($adminCode))->firstOrFail();
