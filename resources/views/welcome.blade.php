@@ -5,11 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-
-
+        <title>{{ config('app.name', 'Laravel') }}</title>
         <!-- Styles -->
         <style>
             html, body {
@@ -58,79 +54,42 @@
                 text-decoration: none;
                 text-transform: uppercase;
             }
-
             .m-b-md {
                 margin-bottom: 30px;
-            }
-            .leaderboard-item-container{
-                padding: 1em;
-            }
-            .leaderboard-item{
-                height: 70px;
-                position:relative;
-                border: solid #636b6f;
-                border-radius: 14px;
-            }
-            .total {
-                vertical-align: bottom;
-                height: 100%;
-                display: inline;
-                font-size: 2em;
-            }
-            .avatar-container{
-                text-align: center;
-                width:100%;
-                padding-left: 10px;
-                margin-left: .25em;
-                margin-right: .25em;
-            }
-            .avatar {
-                display: inline-block;
-                width: 60px;
-                overflow: hidden;
-                height: 60px;
-                border-radius: 30px;
-                text-align: center;
-            }
-            .avatar img {
-                width:100%
-            }
-            .placement {
-                font-size: large;
-                position:absolute;
             }
         </style>
     </head>
     <body>
 
-                <div class="title m-b-md">
+                <h1 class="m-b-md">
                     OSCON Tshirt tracker
-                </div>
+                </h1>
 
-                <div>Leaderboard</div>
+                <h2>Leaderboard</h2>
+
                 <div class="leaderboard">
                     @php
                         $lastShirts = 0;
+                        $place = 1;
                     @endphp
                     @foreach ($leaderboard as $user)
                         @php
                             $place = $user->tshirt_count === $lastShirts ? $place : $loop->index + 1;
                         @endphp
-                        <div class="col-xs-8 leaderboard-item-container">
-                            <div class="row leaderboard-item">
-                                <div class="col-xs-3">
-                                    <div class="placement">
-                                        {{  $place }}
-                                    </div>
-                                    <div class="avatar-container">
-                                        <div class="avatar">
-                                            <img src="{{$user->avatar_url ?: 'img/default.svg'}}">
-                                        </div>
-                                    </div>
-
+                        <div class="col-xs-12 col-md-8 col-md-offset-2 leaderboard-item-container">
+                            <div class="leaderboard-item">
+                                <div class="lb-placement">
+                                    {{ $place }}
                                 </div>
-                                <div class="col-xs-9 total">
-                                    {{$user->name}} - {{$user->tshirt_count}} shirts
+                                <div class="lb-avatar">
+                                    <img src="{{$user->avatar_url ?: 'img/default.svg'}}">
+                                </div>
+                                <div class="lb-details">
+                                    <strong>{{$user->name}}</strong><br/>
+                                     {{$user->tshirt_count}} shirts
+                                </div>
+                                <div class="lb-count">
+                                    {{$user->tshirt_emoji}}
                                 </div>
                             </div>
                         </div>

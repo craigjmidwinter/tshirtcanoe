@@ -49,7 +49,8 @@ class TshirtController extends Controller
 		$user->avatar_url = $data['avatar'];
 		$user->save();
 
-
+		return redirect()->route('useradmin', ['user_code' => $user->user_code])
+			->with('status', 'Avatar updated!');
 	}
 
 	protected function register(Request $request) {
