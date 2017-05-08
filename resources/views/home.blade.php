@@ -15,6 +15,14 @@
                         <a class="btn btn-primary" href="/tshirt/{{ $user->user_code }}/add">Add Shirt</a>
                     </div>
 
+                    <div>
+                        <form role="form" method="POST" action="/tshirt/{{ $user->user_code }}/update_avatar">
+                            {{ csrf_field() }}
+                            <input type="text"><
+
+                        </form>
+                    </div>
+
                     @if($user->status =='moderator')
                         <div class="panel panel-item">Pending Users</div>
 

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -62,6 +62,40 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .leaderboard-item-container{
+                padding: 1em;
+            }
+            .leaderboard-item{
+                height: 120px;
+                position:relative
+                border: solid #636b6f;
+                border-radius: 14px;
+            }
+            .total {
+                vertical-align: bottom;
+                height: 100%;
+                display: inline;
+                font-size: 2em;
+            }
+            .avatar-container{
+                text-align: center;
+                width:100%;
+            }
+            .avatar {
+                display: inline-block;
+                width: 60px;
+                overflow: hidden;
+                height: 60px;
+                border-radius: 30px;
+                text-align: center;
+            }
+            .avatar img {
+                width:100%
+            }
+            .placement {
+                position:absolute;
+
+            }
         </style>
     </head>
     <body>
@@ -73,11 +107,37 @@
                 </div>
 
                 <div>Leaderboard</div>
-                <ol class="leaderboard">
+                <div class="leaderboard">
+                    @php
+                        $lastShirts = 0;
+                    @endphp
                     @foreach ($leaderboard as $user)
-                        <li>{{$user->name}} - {{$user->tshirt_count}} shirts</li>
+                        @php
+                            $place = $user->tshirt_count === $lastShirts ? $place : $loop->index + 1;
+                        @endphp
+                        <div class="col-xs-12 col-md-6 col-lg-3 leaderboard-item-container">
+                            <div class="row leaderboard-item">
+                                <div class="col-xs-3">
+                                    <div class="placement">
+                                        {{  $place }}
+                                    </div>
+                                    <div class="avatar-container">
+                                        <div class="avatar">
+                                            <img src="{{$user->avatar_url ?: 'img/default.svg'}}">
+                                        </div>
+                                    </div>
+                                    <div class="name">{{$user->name}}</div>
+                                </div>
+                                <div class="col-xs-9 total">
+                                    {{$user->tshirt_count}} shirts
+                                </div>
+                            </div>
+                        </div>
+                        @php
+                            $lastShirts = $user->tshirt_count;
+                        @endphp
                     @endforeach
-                </ol>
+                </div>
 
             </div>
         </div>
