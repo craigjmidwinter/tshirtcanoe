@@ -64,7 +64,7 @@ class TshirtController extends Controller
 				'user_code' => $this->generateUserCode()
 			]);
 
-			redirect('/tshirt/' . $user->user_code);
+			return redirect('/tshirt/' . $user->user_code);
 		}
 	}
 
@@ -99,7 +99,7 @@ class TshirtController extends Controller
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
 		$randstring = '';
 		for ($i = 0; $i < 4; $i++) {
-			$randstring .= $characters[rand(0, strlen($characters))];
+			$randstring .= $characters[rand(0, strlen($characters) -1)];
 		}
 		return $randstring;
 
