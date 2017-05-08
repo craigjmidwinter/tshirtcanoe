@@ -65,7 +65,7 @@ class TshirtController extends Controller
 				'user_code' => $this->generateUserCode()
 			]);
 
-			redirect('/tshirt/' . $user->user_code);
+			return redirect('/tshirt/' . $user->user_code);
 		}
 	}
 
@@ -82,7 +82,7 @@ class TshirtController extends Controller
 		return redirect('/tshirt/' . $user->user_code);
 	}
 
-	protected function approveUser($adminCode, $userCode){
+	protected function approve($adminCode, $userCode){
 
 		try {
 			$adminUser = User::where('user_code', strtolower($adminCode))->firstOrFail();
@@ -90,6 +90,7 @@ class TshirtController extends Controller
 				$user = User::where('user_code', strtolower($userCode))->firstOrFail();
 				$user->status = 'active';
 				$user->save();
+				return redirect('/tshirt/' . $user->user_code);
 			}
 		} catch (ModelNotFoundException $e){
 			return redirect('/');
@@ -100,7 +101,7 @@ class TshirtController extends Controller
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
 		$randstring = '';
 		for ($i = 0; $i < 4; $i++) {
-			$randstring .= $characters[rand(0, strlen($characters))];
+			$randstring .= $characters[rand(0, strlen($characters) -1)];
 		}
 		return $randstring;
 
