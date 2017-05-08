@@ -10,9 +10,10 @@
 
                 <div class="panel-body">
                     <div class="panel panel-item">Shirt Admin</div>
-                    <div class="text-info">You currently have {{ $user->tshirt_count > 0 ? $user->tshirt_count : 'no' }} shirts</div>
+                    <div class="text-info">You currently have <strong>{{ $user->tshirt_count > 0 ? $user->tshirt_count : 'no' }}</strong> shirts</div>
                     <div>
                         <a class="btn btn-primary" href="/tshirt/{{ $user->user_code }}/add">Add Shirt</a>
+                        <a class="btn btn-danger" href="/tshirt/{{ $user->user_code }}/remove">Remove Shirt</a>
                     </div>
 
                     <div>

@@ -82,6 +82,22 @@ class TshirtController extends Controller
 		return redirect('/tshirt/' . $user->user_code);
 	}
 
+	protected function removeShirt($userCode) {
+		try {
+			$user = User::where('user_code', strtolower($userCode))->firstOrFail();
+		} catch (ModelNotFoundException $e){
+			return redirect('/register');
+		}
+
+		if($user->tshirt_count > 0) {
+			$user->tshirt_count -= 1;
+		};
+
+		$user->save();
+
+		return redirect('/tshirt/' . $user->user_code);
+	}
+
 	protected function approve($adminCode, $userCode){
 
 		try {
