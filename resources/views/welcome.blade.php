@@ -116,14 +116,6 @@
                         @php
                             $place = $user->tshirt_count === $lastShirts ? $place : $loop->index + 1;
                         @endphp
-                        {{--<div>{{  $place }}.--}}
-                            {{--<div class="avatar-container">--}}
-                                {{--<div class="avatar">--}}
-                                    {{--<img src="{{$user->avatar_url ?: 'img/default.svg'}}">--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--{{$user->name}} - {{$user->tshirt_count}} shirts--}}
-                            {{--</div>--}}
                         <div class="col-xs-8 leaderboard-item-container">
                             <div class="row leaderboard-item">
                                 <div class="col-xs-3">
