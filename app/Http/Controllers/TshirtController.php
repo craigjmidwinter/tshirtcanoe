@@ -49,7 +49,7 @@ class TshirtController extends Controller
 		$user->avatar_url = $data['avatar'];
 		$user->save();
 
-
+		return redirect('/tshirt/' . $user->user_code);
 	}
 
 	protected function register(Request $request) {
