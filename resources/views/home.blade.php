@@ -18,7 +18,9 @@
                     <div>
                         <form role="form" method="POST" action="/tshirt/{{ $user->user_code }}/update_avatar">
                             {{ csrf_field() }}
-                            <input type="text"><
+                            <input type="hidden" value="{{$user->user_code}}" name="user_code">
+                            <input type="text" name="avatar" placeholder="url for avatar photo" value="{{$user->avatar_url}}" /> <button type="submit" class="btn btn-primary">Update avatar url</button>
+                        </form>
 
                         </form>
                     </div>

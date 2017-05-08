@@ -8,7 +8,7 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
 
         <!-- Styles -->
         <style>
@@ -66,8 +66,8 @@
                 padding: 1em;
             }
             .leaderboard-item{
-                height: 120px;
-                position:relative
+                height: 70px;
+                position:relative;
                 border: solid #636b6f;
                 border-radius: 14px;
             }
@@ -80,6 +80,9 @@
             .avatar-container{
                 text-align: center;
                 width:100%;
+                padding-left: 10px;
+                margin-left: .25em;
+                margin-right: .25em;
             }
             .avatar {
                 display: inline-block;
@@ -93,15 +96,13 @@
                 width:100%
             }
             .placement {
+                font-size: large;
                 position:absolute;
-
             }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
 
-            <div class="content">
                 <div class="title m-b-md">
                     OSCON Tshirt tracker
                 </div>
@@ -115,7 +116,15 @@
                         @php
                             $place = $user->tshirt_count === $lastShirts ? $place : $loop->index + 1;
                         @endphp
-                        <div class="col-xs-12 col-md-6 col-lg-3 leaderboard-item-container">
+                        {{--<div>{{  $place }}.--}}
+                            {{--<div class="avatar-container">--}}
+                                {{--<div class="avatar">--}}
+                                    {{--<img src="{{$user->avatar_url ?: 'img/default.svg'}}">--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--{{$user->name}} - {{$user->tshirt_count}} shirts--}}
+                            {{--</div>--}}
+                        <div class="col-xs-8 leaderboard-item-container">
                             <div class="row leaderboard-item">
                                 <div class="col-xs-3">
                                     <div class="placement">
@@ -126,10 +135,10 @@
                                             <img src="{{$user->avatar_url ?: 'img/default.svg'}}">
                                         </div>
                                     </div>
-                                    <div class="name">{{$user->name}}</div>
+
                                 </div>
                                 <div class="col-xs-9 total">
-                                    {{$user->tshirt_count}} shirts
+                                    {{$user->name}} - {{$user->tshirt_count}} shirts
                                 </div>
                             </div>
                         </div>

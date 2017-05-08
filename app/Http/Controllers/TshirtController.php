@@ -32,6 +32,26 @@ class TshirtController extends Controller
 		return view('welcome',['leaderboard' => $leaderboard, 'counts' => $counts]);
 	}
 
+	protected function updateAvatar(Request $request){
+
+		$data = $request->all();
+
+		if(! isset($data['avatar']) || ! isset($data['user_code'])){
+			return redirect('/register');
+		}
+
+		try {
+			$user = User::where('user_code', strtolower($data['user_code']))->firstOrFail();
+		} catch (ModelNotFoundException $e){
+			return redirect('/register');
+		}
+
+		$user->avatar_url = $data['avatar'];
+		$user->save();
+
+
+	}
+
 	protected function register(Request $request) {
 	    $data = $request->all();
 
