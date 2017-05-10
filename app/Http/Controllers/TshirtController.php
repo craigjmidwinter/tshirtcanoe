@@ -28,7 +28,7 @@ class TshirtController extends Controller
 	protected function index(){
 		$leaderboard = User::all()->whereIn('status',['active','moderator'])->sortBy('tshirt_count', SORT_DESC, true);
 
-		$counts = DB::table('users')->select('sum(tshirt_count) as total')->whereIn('status',['active','moderator']);
+		$counts = DB::table('users')->select(DB::raw('sum(tshirt_count) as total'))->whereIn('status',['active','moderator'])->list(['total']);
 		return view('welcome',['leaderboard' => $leaderboard, 'counts' => $counts]);
 	}
 
@@ -111,6 +111,13 @@ class TshirtController extends Controller
 		} catch (ModelNotFoundException $e){
 			return redirect('/');
 		}
+	}
+
+	protected function codes(){
+		$users = User::whereIn('status', ['active','moderator'])
+			->orderBy('name')
+			->get();
+		return view('codes',['users' => $users]);
 	}
 
 	private function generateUserCode(){
