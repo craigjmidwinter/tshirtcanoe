@@ -29,7 +29,7 @@ class TshirtController extends Controller
 		$leaderboard = User::all()->whereIn('status',['active','moderator'])->sortBy('tshirt_count', SORT_DESC, true);
 
 		$counts = DB::table('users')->select(DB::raw('sum(tshirt_count) as total'))->whereIn('status',['active','moderator'])->get(['total']);
-		return view('welcome',['leaderboard' => $leaderboard, 'counts' => $counts]);
+		return view('welcome',['leaderboard' => $leaderboard, 'total' => $counts[0]->total]);
 	}
 
 	protected function updateAvatar(Request $request){

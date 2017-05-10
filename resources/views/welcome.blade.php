@@ -26,6 +26,7 @@
                 <h1>
                     OSCON Tshirt Tracker
                 </h1>
+                <h3>Tipping Canoe has collected a combined total of {{$total}} shirts</h3>
 
                 <h2>Leaderboard</h2>
 
