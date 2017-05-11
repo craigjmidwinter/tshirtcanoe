@@ -44,4 +44,27 @@ class User extends Authenticatable
             ? str_repeat('👕', $this->tshirt_count)
             : '🙈';
     }
+
+    public function getOtherShitAttribute() {
+
+	    if(!$this->misc_shit) {
+		    return null;
+	    }
+	    $otherShit = [];
+	    $lines = explode(PHP_EOL, $this->misc_shit);
+
+	    foreach ($lines as $line) {
+
+		    $shit = explode(',', $line);
+			$count = isset($shit[2]) ? $shit[2] : 1;
+
+		    $otherShit[] = [
+				'label' => $shit[0],
+			    'emoji' => str_repeat($shit[1], $count),
+			    'count' => $count
+			];
+	    }
+
+	    return $otherShit;
+    }
 }

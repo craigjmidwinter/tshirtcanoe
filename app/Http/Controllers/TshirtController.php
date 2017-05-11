@@ -113,6 +113,27 @@ class TshirtController extends Controller
 		}
 	}
 
+	protected function updateMisc(Request $request){
+
+		$data = $request->all();
+
+		if(! isset($data['misc_shit']) || ! isset($data['user_code'])){
+			return redirect('/register');
+		}
+
+		try {
+			$user = User::where('user_code', strtolower($data['user_code']))->firstOrFail();
+		} catch (ModelNotFoundException $e){
+			return redirect('/register');
+		}
+
+		$user->misc_shit = $data['misc_shit'];
+		$user->save();
+
+		return redirect()->route('useradmin', ['user_code' => $user->user_code])
+			->with('status', 'Shit updated!');
+	}
+
 	protected function codes(){
 		$users = User::whereIn('status', ['active','moderator'])
 			->orderBy('name')

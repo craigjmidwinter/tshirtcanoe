@@ -50,10 +50,21 @@
                                 <div class="lb-details">
                                     <strong>{{$user->name}}</strong><br/>
                                      {{$user->tshirt_count}} shirts
+                                    @if($user->other_shit)
+                                        @foreach($user->other_shit as $othershit)
+                                            <br/>{{$othershit['count']}} {{$othershit['label']}}
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <div class="lb-count">
-                                    {{$user->tshirt_emoji}}
+                                    <div>{{$user->tshirt_emoji}}</div>
+                                    @if($user->other_shit)
+                                        @foreach($user->other_shit as $othershit)
+                                            <div>{{$othershit['emoji']}}</div>
+                                        @endforeach
+                                    @endif
                                 </div>
+
                             </div>
                         </div>
                         @php
