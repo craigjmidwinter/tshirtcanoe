@@ -56,11 +56,11 @@ class User extends Authenticatable
 	    foreach ($lines as $line) {
 
 		    $shit = explode(',', $line);
-			$count = isset($shit[2]) ? $shit[2] : 1;
+			$count = isset($shit[2]) ? trim($shit[2]) : 1;
 
 		    $otherShit[] = [
-				'label' => $shit[0],
-			    'emoji' => str_repeat($shit[1], $count),
+				'label' => trim($shit[0]),
+			    'emoji' => str_repeat(trim($shit[1]), $count),
 			    'count' => $count
 			];
 	    }
