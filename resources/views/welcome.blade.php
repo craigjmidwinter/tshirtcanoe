@@ -46,25 +46,30 @@
                                 </div>
                                 <div class="lb-avatar">
                                     <img src="{{$user->avatar_url ?: 'img/default.svg'}}">
+                                    <strong>{{$user->name}}</strong>
                                 </div>
                                 <div class="lb-details">
-                                    <strong>{{$user->name}}</strong><br/>
-                                     {{$user->tshirt_count}} shirts
+                                    <div class="lb-details-row">
+                                        <div class="lb-details-item">
+                                            {{$user->tshirt_count}} shirts
+                                        </div>
+                                        <div class="lb-details-emoji">
+                                            {{$user->tshirt_emoji}}
+                                        </div>
+                                    </div>
                                     @if($user->other_shit)
                                         @foreach($user->other_shit as $othershit)
-                                            <br/>{{$othershit['count']}} {{$othershit['label']}}
+                                    <div class="lb-details-row">
+                                        <div class="lb-details-item">
+                                            {{$othershit['count']}} {{$othershit['label']}}
+                                        </div>
+                                        <div class="lb-details-emoji">
+                                            {{$othershit['emoji']}}
+                                        </div>
+                                    </div>
                                         @endforeach
                                     @endif
                                 </div>
-                                <div class="lb-count">
-                                    <div>{{$user->tshirt_emoji}}</div>
-                                    @if($user->other_shit)
-                                        @foreach($user->other_shit as $othershit)
-                                            <div>{{$othershit['emoji']}}</div>
-                                        @endforeach
-                                    @endif
-                                </div>
-
                             </div>
                         </div>
                         @php
